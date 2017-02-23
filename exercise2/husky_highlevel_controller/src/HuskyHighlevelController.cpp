@@ -5,8 +5,6 @@ namespace husky_highlevel_controller {
 HuskyHighlevelController::HuskyHighlevelController(ros::NodeHandle& nodeHandle) :
   nodeHandle_(nodeHandle)
 {
-  subscriber_ = nodeHandle.subscribe("/scan", 10, &HuskyHighlevelController::topicCallback, this);
-
   std::string topic;
   int queue_size;
 
@@ -17,6 +15,8 @@ HuskyHighlevelController::HuskyHighlevelController(ros::NodeHandle& nodeHandle) 
   if (!nodeHandle.getParam("queue_size", queue_size)) {
     ROS_ERROR("Could not find queue_size parameter!");
   }
+
+  subscriber_ = nodeHandle.subscribe(topic, queue_size, &HuskyHighlevelController::topicCallback, this);
 }
 
 HuskyHighlevelController::~HuskyHighlevelController()
