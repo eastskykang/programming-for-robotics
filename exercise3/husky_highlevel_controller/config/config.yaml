@@ -1,2 +1,4 @@
 topic: '/scan'
 queue_size: 10
+control_freq: 10
+p_gain: 1

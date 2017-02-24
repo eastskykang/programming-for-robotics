@@ -2,6 +2,7 @@
 
 #include <ros/ros.h>
 #include <sensor_msgs/LaserScan.h>
+#include <geometry_msgs/Twist.h>
 
 namespace husky_highlevel_controller {
 
@@ -23,8 +24,11 @@ public:
 private:
 	ros::NodeHandle nodeHandle_;
 	ros::Subscriber subscriber_;
+	ros::Publisher publisher_;
+//	ros::Timer timer_;
 
 	void topicCallback(const sensor_msgs::LaserScan::ConstPtr& msg);
+	void controlCallback(float p_gain, int control_freq);
 };
 
 } /* namespace */
