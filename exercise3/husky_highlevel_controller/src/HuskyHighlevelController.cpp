@@ -94,7 +94,7 @@ void HuskyHighlevelController::topicCallback(const sensor_msgs::LaserScan::Const
   marker.type = visualization_msgs::Marker::SPHERE;
   marker.action = visualization_msgs::Marker::ADD;
   marker.pose.position.x = x;
-  marker.pose.position.y = y;
+  marker.pose.position.y = -y;
   marker.pose.position.z = z;
   marker.pose.orientation.x = 0.0;
   marker.pose.orientation.y = 0.0;
