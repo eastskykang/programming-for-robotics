@@ -1,0 +1,15 @@
+<launch>
+<node pkg="husky_highlevel_controller" type="husky_highlevel_controller" 
+    name="husky_highlevel_controller" output="screen">
+    <rosparam command="load"
+        file="$(find husky_highlevel_controller)/config/config.yaml"/>
+</node>
+
+<node pkg="rviz" type="rviz" name="rviz">
+</node>
+
+<include file="$(find husky_gazebo)/launch/husky_empty_world.launch">
+    <arg name="world_name" value="$(find husky_highlevel_controller)/worlds/singlePillar.world"/>
+    <arg name="laser_enabled" value="true"/>
+</include>
+</launch>

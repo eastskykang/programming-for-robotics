@@ -1,0 +1,2 @@
+topic: '/scan'
+queue_size: 10
