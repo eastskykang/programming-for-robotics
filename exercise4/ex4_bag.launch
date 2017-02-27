@@ -8,12 +8,22 @@
 </node>
 
 <!-- STATE PUBLISHER -->
-<node pkg="robot_state_publisher" type="state_publisher" name="robot_state_publisher" />
+<node pkg="robot_state_publisher" type="state_publisher" name="robot_state_publisher"/>
 
 <!-- EKF -->
 <node pkg="robot_localization" type="ekf_localization_node" name="ekf_localization">
     <rosparam command="load"
         file="$(find husky_control)/config/localization.yaml"/>
 </node>
+
+<!-- LOAD HUSKY MODEL -->
+<arg name="laser_enabled" default="true"/>
+<arg name="ur5_enabled" default="false"/>
+<arg name="kinect_enabled" default="false"/>
+<arg name="robot_initial_pose" default="$(optenv ROBOT_INITIAL_POSE)"/>
+<arg name="husky_gazebo_description" default="$(optenv HUSKY_GAZEBO_DESCRIPTION)"/>
+<arg name="ur5_control_yaml_file" default="$(find husky_control)/config/control_ur5.yaml"/>
+
+<param name="robot_description" command="$(find xacro)/xacro.py '$(arg husky_gazebo_description)' laser_enabled:=$(arg laser_enabled) ur5_enabled:=$(arg ur5_enabled) kinect_enabled:=$(arg kinect_enabled)" />
 
 </launch>
