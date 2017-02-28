@@ -1,0 +1,18 @@
+<launch>
+
+<!-- PARAM --> 
+<rosparam param="/use_sim_time">true</rosparam>
+
+<!-- RVIZ --> 
+<node pkg="rviz" type="rviz" name="rviz">
+</node>
+
+<!-- GAZEBO --> 
+<include file="$(find husky_gazebo)/launch/spawn_husky.launch">
+    <arg name="laser_enabled" value="true"/>
+    <rosparam command="load"
+        file="$(find husky_control)/config/localization.yaml"/>
+</include>
+
+</launch>
+
