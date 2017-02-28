@@ -1,0 +1,4 @@
+topic: '/scan'
+queue_size: 10
+x_dot: 0.5
+p_gain: 1
