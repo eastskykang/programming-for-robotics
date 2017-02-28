@@ -34,6 +34,9 @@ HuskyHighlevelController::HuskyHighlevelController(ros::NodeHandle& nodeHandle) 
   publisher_ = nodeHandle.advertise<geometry_msgs::Twist>("/cmd_vel", 1);
 
   vis_pub_ = nodeHandle.advertise<visualization_msgs::Marker>("/visualization_marker", 0);
+
+  // initialize service server
+  service_ = nodeHandle.advertiseService("/pause_husky", &HuskyHighlevelController::serviceCallback, this);
 }
 
 HuskyHighlevelController::~HuskyHighlevelController()
@@ -111,6 +114,13 @@ void HuskyHighlevelController::topicCallback(const sensor_msgs::LaserScan::Const
   marker.mesh_resource = "package://pr2_description/meshes/base_v0/base.dae";
   vis_pub_.publish(marker);
 
+}
+
+bool HuskyHighlevelController::serviceCallback(std_srvs::SetBool::Request& request,
+                                               std_srvs::SetBool::Response& response)
+{
+  ROS_INFO("pause husky");
+  return true;
 }
 
 } /* namespace */
