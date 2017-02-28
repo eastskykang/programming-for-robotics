@@ -32,6 +32,9 @@ private:
 
 	ros::ServiceServer service_;
 
+	// variables
+	bool pause;
+
 	// parameters
   float p_gain;
   float x_dot;

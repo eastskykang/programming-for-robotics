@@ -8,6 +8,9 @@ HuskyHighlevelController::HuskyHighlevelController(ros::NodeHandle& nodeHandle) 
   std::string topic;
   int queue_size;
 
+  // initialize variables
+  pause = false;
+
   // initialize parameters
   p_gain = 0;
   x_dot = 0;
@@ -78,8 +81,18 @@ void HuskyHighlevelController::topicCallback(const sensor_msgs::LaserScan::Const
   // calculate control input
   float angle_dot, x_dot;
 
-  angle_dot = HuskyHighlevelController::p_gain * (0 - rad);
-  x_dot = HuskyHighlevelController::x_dot;
+  angle_dot = 0;
+  x_dot = 0;
+
+  if (pause == true) {
+    // pause
+    angle_dot = 0;
+    x_dot = 0;
+  } else {
+    // resume
+    angle_dot = HuskyHighlevelController::p_gain * (0 - rad);
+    x_dot = HuskyHighlevelController::x_dot;
+  }
 
   // publish control input as message
   geometry_msgs::Twist base_cmd;
@@ -119,7 +132,19 @@ void HuskyHighlevelController::topicCallback(const sensor_msgs::LaserScan::Const
 bool HuskyHighlevelController::serviceCallback(std_srvs::SetBool::Request& request,
                                                std_srvs::SetBool::Response& response)
 {
-  ROS_INFO("pause husky");
+  bool input = request.data;
+
+  if (input == true) {
+    pause = true;
+    response.message = "pause husky";
+    ROS_INFO("pause husky");
+  } else {
+    pause = false;
+    response.message = "resume husky";
+    ROS_INFO("resume husky");
+  }
+
+  response.success = true;
   return true;
 }
 
