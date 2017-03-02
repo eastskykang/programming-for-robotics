@@ -1,0 +1,14 @@
+<?xml version="1.0"?>
+<package format="2">
+  <name>husky_emergency_stop_crash</name>
+  <version>0.1.0</version>
+  <description>The husky_emergency_stop_crash package</description>
+  <maintainer email="kangd@student.ethz.ch">Dongho Kang</maintainer>
+  <license>BSD</license>
+  <author email="kangd@student.ethz.ch">Dongho Kang</author>
+  
+  <buildtool_depend>catkin</buildtool_depend>
+  
+  <depend>roscpp</depend>
+  <depend>sensor_msgs</depend>
+</package>
