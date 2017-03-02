@@ -11,7 +11,7 @@ HuskyEmergencyStop::HuskyEmergencyStop(ros::NodeHandle& nodeHandle)
   ROS_INFO("Successfully launched node.");
 
   // initialize subscriber
-  subscriber_ = nodeHandle.subscribe("/scan", 10, &HuskyEmergencyStop::topicCallback, this);
+  subscriber_ = nodeHandle.subscribe("/imu/data", 10, &HuskyEmergencyStop::topicCallback, this);
   client_ = nodeHandle.serviceClient<std_srvs::SetBool>("/pause_husky");
 
 }
@@ -20,27 +20,14 @@ HuskyEmergencyStop::~HuskyEmergencyStop()
 {
 }
 
-void HuskyEmergencyStop::topicCallback(const sensor_msgs::LaserScan::ConstPtr& msg)
+void HuskyEmergencyStop::topicCallback(const sensor_msgs::Imu::ConstPtr& msg)
 {
-  int i = 0;
-  int size = msg->ranges.size();
-
-  float min_dis = 10000;
-  float min_i = 0;
-
-  // get min distance
-  for (i = 0; i < size; i++) {
-    float dist = msg->ranges.at(i);
-
-    if (dist < min_dis) {
-      min_dis = dist;
-      min_i = i;
-    }
-  }
+  float acc_x = msg->linear_acceleration.x;
+  float acc_y = msg->linear_acceleration.y;
 
   std_srvs::SetBool service;
 
-  if (min_dis < 1.0) {
+  if (pow(acc_x, 2) + pow(acc_y, 2) > pow(0.5, 2)) {
     // too close
     service.request.data = true;
 

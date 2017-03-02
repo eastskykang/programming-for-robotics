@@ -2,7 +2,7 @@
 
 // ROS
 #include <ros/ros.h>
-#include <sensor_msgs/LaserScan.h>
+#include <sensor_msgs/Imu.h>
 #include <std_srvs/SetBool.h>
 
 namespace husky_emergency_stop {
@@ -32,7 +32,7 @@ class HuskyEmergencyStop
 
   ros::ServiceClient client_;
 
-  void topicCallback(const sensor_msgs::LaserScan::ConstPtr& msg);
+  void topicCallback(const sensor_msgs::Imu::ConstPtr& msg);
 };
 
 } /* namespace */
